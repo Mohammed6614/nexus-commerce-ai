@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id               String   @id @default(cuid())
+  subdomain        String   @unique
+  name             String
+  email            String   @unique
+  password         String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  plan             String   @default("beta")
+  settings         String   @default("{}")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  products    Product[]
+  orders      Order[]
+  campaigns   Campaign[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  tenantId    String
+  name        String
+  description String?
+  price       Float
+  imageUrl    String?
+  category    String
+  stock       Int      @default(0)
+  aiGenerated String?
+  targeting   String   @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  orderItems  OrderItem[]
+  campaigns   Campaign[]
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  tenantId        String
+  orderNumber     String   @unique
+  customerName    String
+  customerEmail   String
+  total           Float
+  status          String   @default("pending")
+  paymentStatus   String   @default("pending")
+  shippingAddress String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  tenant      Tenant       @relation(fields: [tenantId], references: [id])
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  tenantId    String
+  productId   String
+  name        String
+  platform    String
+  status      String   @default("draft")
+  budget      Float
+  spent       Float    @default(0)
+  sales       Int      @default(0)
+  roas        Float    @default(0)
+  campaignId  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  tenant  Tenant  @relation(fields: [tenantId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}

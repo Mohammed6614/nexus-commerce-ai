@@ -1,0 +1,690 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Responsive font sizes */
+  html {
+    font-size: 14px;
+  }
+  
+  @media (min-width: 640px) {
+    html {
+      font-size: 15px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    html {
+      font-size: 16px;
+    }
+  }
+  
+  @media (min-width: 1536px) {
+    html {
+      font-size: 18px;
+    }
+  }
+}
+
+@layer components {
+  /* Glass morphism effect - responsive */
+  .glass-morphism {
+    @apply backdrop-blur-md bg-white/10 dark:bg-black/20 border border-white/20 shadow-xl;
+  }
+  
+  /* Responsive glass effect */
+  @media (max-width: 640px) {
+    .glass-morphism {
+      @apply backdrop-blur-sm bg-white/5 dark:bg-black/10;
+    }
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto];
+  }
+  
+  /* Responsive gradient text */
+  @media (max-width: 640px) {
+    .gradient-text {
+      @apply text-xl;
+    }
+  }
+  
+  /* Card hover effect - touch friendly */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  
+  @media (hover: hover) and (pointer: fine) {
+    .card-hover:hover {
+      @apply scale-105 shadow-2xl;
+    }
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    .card-hover:active {
+      @apply scale-95;
+    }
+  }
+  
+  /* Responsive container */
+  .responsive-container {
+    @apply w-full px-4 mx-auto;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-container {
+      @apply max-w-screen-sm px-6;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-container {
+      @apply max-w-screen-md px-8;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-container {
+      @apply max-w-screen-lg px-10;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .responsive-container {
+      @apply max-w-screen-xl px-12;
+    }
+  }
+  
+  @media (min-width: 1536px) {
+    .responsive-container {
+      @apply max-w-screen-2xl px-16;
+    }
+  }
+  
+  /* Responsive grid */
+  .responsive-grid {
+    @apply grid grid-cols-1 gap-4;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-grid {
+      @apply grid-cols-2 gap-5;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-grid {
+      @apply grid-cols-3 gap-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-grid {
+      @apply grid-cols-4 gap-6;
+    }
+  }
+  
+  /* Responsive sidebar */
+  .sidebar-desktop {
+    @apply fixed left-0 top-0 h-full w-64 z-40;
+  }
+  
+  .sidebar-mobile {
+    @apply fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full transition-transform duration-300 ease-in-out;
+  }
+  
+  .sidebar-mobile.open {
+    @apply translate-x-0;
+  }
+  
+  @media (min-width: 768px) {
+    .sidebar-mobile {
+      @apply hidden;
+    }
+  }
+  
+  /* Responsive typography */
+  .responsive-heading-1 {
+    @apply text-2xl font-bold;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-heading-1 {
+      @apply text-3xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-heading-1 {
+      @apply text-4xl;
+    }
+  }
+  
+  .responsive-heading-2 {
+    @apply text-xl font-semibold;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-heading-2 {
+      @apply text-2xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-heading-2 {
+      @apply text-3xl;
+    }
+  }
+  
+  /* Responsive padding */
+  .responsive-padding {
+    @apply p-4;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-padding {
+      @apply p-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-padding {
+      @apply p-8;
+    }
+  }
+  
+  /* Touch-friendly buttons */
+  .touch-button {
+    @apply min-h-[44px] min-w-[44px] inline-flex items-center justify-center;
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    .touch-button {
+      @apply min-h-[48px] min-w-[48px];
+    }
+  }
+  
+  /* Responsive modal */
+  .responsive-modal {
+    @apply w-[95%] max-w-md mx-auto;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-modal {
+      @apply w-full max-w-lg;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-modal {
+      @apply max-w-xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-modal {
+      @apply max-w-2xl;
+    }
+  }
+  
+  /* Responsive table */
+  .responsive-table {
+    @apply w-full overflow-x-auto;
+  }
+  
+  .responsive-table table {
+    @apply min-w-[640px] w-full;
+  }
+  
+  @media (max-width: 640px) {
+    .responsive-table table {
+      @apply min-w-[500px];
+    }
+  }
+  
+  /* Mobile menu overlay */
+  .mobile-menu-overlay {
+    @apply fixed inset-0 bg-black/50 z-40;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  /* Bottom sheet for mobile */
+  .bottom-sheet {
+    @apply fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl shadow-2xl z-50;
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Custom scrollbar for desktop */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500 dark:bg-gray-500;
+  }
+  
+  /* Responsive custom scrollbar */
+  @media (max-width: 768px) {
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+  }
+  
+  /* Animation keyframes */
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Animation utilities */
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slideDown 0.2s ease-out;
+  }
+  
+  /* Responsive animations */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-gradient,
+    .animate-float,
+    .animate-slide-in,
+    .animate-slide-in-right,
+    .animate-fade-in,
+    .animate-scale-in,
+    .animate-slide-down {
+      animation: none;
+    }
+  }
+  
+  /* Loading spinner */
+  .loading-spinner {
+    @apply w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin;
+  }
+  
+  /* Skeleton loading */
+  .skeleton {
+    @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
+  }
+  
+  /* Responsive skeleton */
+  @media (max-width: 640px) {
+    .skeleton {
+      @apply rounded-lg;
+    }
+  }
+  
+  /* Focus styles - touch friendly */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    .focus-ring {
+      @apply focus:ring-4 focus:ring-offset-0;
+    }
+  }
+  
+  /* Selection styles */
+  ::selection {
+    @apply bg-primary/20 text-primary;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  
+  /* Disable scroll when modal is open */
+  body.modal-open {
+    overflow: hidden;
+    @apply fixed w-full;
+  }
+  
+  /* Responsive image handling */
+  .responsive-image {
+    @apply w-full h-auto object-cover;
+  }
+  
+  /* Safe area insets for notched devices */
+  @supports (padding: max(0px)) {
+    .safe-top {
+      padding-top: max(1rem, env(safe-area-inset-top));
+    }
+    
+    .safe-bottom {
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+    
+    .safe-left {
+      padding-left: max(1rem, env(safe-area-inset-left));
+    }
+    
+    .safe-right {
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+  }
+  
+  /* Orientation specific styles */
+  @media (orientation: landscape) and (max-height: 600px) {
+    .landscape-compact {
+      @apply py-2;
+    }
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .glass-morphism {
+      @apply bg-white border-2 border-black dark:bg-black dark:border-white;
+    }
+    
+    .gradient-text {
+      @apply text-black dark:text-white bg-none;
+    }
+  }
+  
+  /* Dark mode improvements */
+  @media (prefers-color-scheme: dark) {
+    .invert-on-dark {
+      @apply invert;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .no-print {
+      display: none;
+    }
+    
+    .break-inside-avoid {
+      break-inside: avoid;
+    }
+  }
+}
+
+/* Toast animations */
+.toast-enter {
+  animation: slideInRight 0.2s ease-out;
+}
+
+.toast-exit {
+  animation: fadeIn 0.2s ease-out reverse;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-40;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Responsive modal backdrop */
+@media (max-width: 640px) {
+  .modal-backdrop {
+    @apply bg-black/70 backdrop-blur-none;
+  }
+}
+
+/* Hover effects - touch friendly */
+.hover-lift {
+  @apply transition-transform duration-200;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .hover-lift:active {
+    @apply scale-95;
+  }
+}
+
+.hover-glow {
+  @apply transition-shadow duration-200;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-glow:hover {
+    @apply shadow-lg shadow-primary/20;
+  }
+}
+
+/* Responsive breakpoint utilities */
+.breakpoint-xs {
+  @apply max-w-[480px];
+}
+
+.breakpoint-sm {
+  @apply max-w-[640px];
+}
+
+.breakpoint-md {
+  @apply max-w-[768px];
+}
+
+.breakpoint-lg {
+  @apply max-w-[1024px];
+}
+
+.breakpoint-xl {
+  @apply max-w-[1280px];
+}
+
+.breakpoint-2xl {
+  @apply max-w-[1536px];
+}
+
+/* Device-specific utilities */
+.landscape-only {
+  @apply hidden;
+}
+
+@media (orientation: landscape) {
+  .landscape-only {
+    @apply block;
+  }
+  
+  .portrait-only {
+    @apply hidden;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .touch-optimized {
+    @apply py-3 px-4 text-base;
+  }
+  
+  select, input, textarea, button {
+    @apply text-base;
+  }
+} 
