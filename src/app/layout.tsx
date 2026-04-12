@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   description: 'Build your store, AI handles your marketing',
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
+
 export default function RootLayout({
   children,
 }: {
