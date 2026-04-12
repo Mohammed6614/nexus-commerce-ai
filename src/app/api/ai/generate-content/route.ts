@@ -1,12 +1,9 @@
 import { NextResponse } from 'next/server'
-import OpenAI from 'openai'
+import { getOpenAIClient } from '@/lib/ai/openai'
 import { prisma } from '@/lib/db/prisma'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-
 export async function POST(req: Request) {
+  const openai = getOpenAIClient()
   try {
     const { productId } = await req.json()
     

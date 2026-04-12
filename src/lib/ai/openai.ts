@@ -1,10 +1,15 @@
 import OpenAI from 'openai'
 
-export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+export function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) {
+    throw new Error('Missing OPENAI_API_KEY')
+  }
+  return new OpenAI({ apiKey })
+}
 
 export async function generateProductDescription(productName: string, category: string, price: number) {
+  const openai = getOpenAIClient()
   const response = await openai.chat.completions.create({
     model: 'gpt-4-turbo-preview',
     messages: [
@@ -25,6 +30,7 @@ export async function generateProductDescription(productName: string, category: 
 }
 
 export async function generateAdCopy(productName: string, productDescription: string) {
+  const openai = getOpenAIClient()
   const response = await openai.chat.completions.create({
     model: 'gpt-4-turbo-preview',
     messages: [
