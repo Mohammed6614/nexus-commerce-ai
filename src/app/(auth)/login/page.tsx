@@ -22,6 +22,8 @@ export default function LoginPage() {
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({})
   const [formError, setFormError] = useState('')
 
+  const verificationError = formError.toLowerCase().includes('verify') || formError.toLowerCase().includes('التحقق')
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormError('')
@@ -88,6 +90,14 @@ export default function LoginPage() {
           {formError && (
             <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-700 dark:bg-red-950/20 dark:text-red-300">
               {formError}
+            </div>
+          )}
+
+          {verificationError && (
+            <div className="mb-4 text-sm text-blue-700 dark:text-blue-300">
+              <Link href="/resend-verification" className="underline">
+                أعد إرسال رسالة التحقق
+              </Link>
             </div>
           )}
 

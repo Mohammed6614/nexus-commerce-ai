@@ -24,7 +24,8 @@ export const authOptions: NextAuthOptions = {
             email: true,
             name: true,
             password: true,
-            subdomain: true
+            subdomain: true,
+            emailVerified: true
           }
         })
         
@@ -32,6 +33,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error('No user found')
         }
         
+        if (!tenant.emailVerified) {
+          throw new Error('Please verify your email before signing in.')
+        }
+
         const isValid = await bcrypt.compare(credentials.password, tenant.password)
         if (!isValid) {
           throw new Error('Invalid password')

@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { Sidebar } from '@/components/dashboard/Sidebar'
 import { Header } from '@/components/dashboard/Header'
-import { AuthProvider } from '@/components/providers/AuthProvider'
 
 export default function DashboardLayout({
   children,
@@ -13,9 +12,8 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <AuthProvider>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {sidebarOpen && (
           <div
@@ -34,6 +32,5 @@ export default function DashboardLayout({
           </main>
         </div>
       </div>
-    </AuthProvider>
   )
-} 
+}

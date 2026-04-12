@@ -35,8 +35,8 @@ cd nexus-commerce-ai
 npm install
 
 # Set up environment variables
-cp .env.example .env.local
-# Edit .env.local with your API keys
+cp .env.example .env
+# Edit .env with your API keys
 
 # Set up database
 npx prisma generate
@@ -44,3 +44,17 @@ npx prisma db push
 
 # Run development server
 npm run dev
+```
+
+### 🔐 Authentication
+
+Nexus Commerce AI includes a full authentication system using:
+
+- `next-auth` with credentials provider
+- `Prisma` for tenant/user storage
+- `bcryptjs` for password hashing
+- `JWT` session strategy
+- Email verification, registration, login, password reset, and sign-out flows
+- Email delivery with SendGrid or SMTP via `nodemailer`
+
+Visit `/register` to create a new store account, `/login` to sign in, `/verify-email` to confirm email, `/resend-verification` to resend a verification email, and `/reset-password` to recover a lost password.

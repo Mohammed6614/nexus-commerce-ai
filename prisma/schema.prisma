@@ -13,6 +13,9 @@ model Tenant {
   name             String
   email            String   @unique
   password         String?
+  emailVerified    Boolean  @default(false)
+  verificationToken String?
+  verificationTokenExpiry DateTime?
   resetToken       String?
   resetTokenExpiry DateTime?
   plan             String   @default("beta")

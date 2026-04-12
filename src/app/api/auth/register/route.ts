@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db/prisma'
 import bcrypt from 'bcryptjs'
+import { randomBytes } from 'crypto'
 import { z } from 'zod'
+import { sendVerificationEmail } from '@/lib/email'
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Please enter a valid store name'),
@@ -42,6 +44,8 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
+    const verificationToken = randomBytes(24).toString('hex')
+    const verificationTokenExpiry = new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 hours
 
     const tenant = await prisma.tenant.create({
       data: {
@@ -49,6 +53,9 @@ export async function POST(req: Request) {
         email: email.toLowerCase(),
         subdomain: subdomain.toLowerCase(),
         password: hashedPassword,
+        emailVerified: false,
+        verificationToken,
+        verificationTokenExpiry,
         plan: 'beta',
         settings: JSON.stringify({
           currency: 'USD',
@@ -59,9 +66,15 @@ export async function POST(req: Request) {
       }
     })
 
+    await sendVerificationEmail({
+      to: tenant.email,
+      token: verificationToken,
+      name: tenant.name,
+    })
+
     return NextResponse.json({
       success: true,
-      message: 'تم إنشاء المتجر بنجاح',
+      message: 'تم إنشاء المتجر بنجاح. يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.',
       tenant: {
         id: tenant.id,
         name: tenant.name,

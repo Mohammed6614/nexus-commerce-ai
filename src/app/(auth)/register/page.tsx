@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { toast } from 'sonner'
@@ -76,20 +75,8 @@ export default function RegisterPage() {
       const data = await response.json()
 
       if (response.ok && data.success) {
-        toast.success('تم إنشاء المتجر بنجاح! جاري تسجيل الدخول تلقائياً...')
-
-        const loginResult = await signIn('credentials', {
-          redirect: false,
-          email: formData.email.toLowerCase(),
-          password: formData.password
-        })
-
-        if (loginResult?.error) {
-          toast.error('تم إنشاء المتجر ولكن فشل تسجيل الدخول تلقائياً. الرجاء تسجيل الدخول يدوياً.')
-          router.push('/login')
-        } else {
-          router.push('/dashboard')
-        }
+        toast.success('تم إنشاء المتجر بنجاح! الرجاء التحقق من بريدك الإلكتروني لتأكيد الحساب.')
+        router.push('/login')
       } else {
         const errorMessage = data.message || 'فشل إنشاء المتجر'
         setFormError(errorMessage)
