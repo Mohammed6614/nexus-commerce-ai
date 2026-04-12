@@ -11,7 +11,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-3xl" />
-        <div className="container mx-auto px-6 py-24 relative">
+        <div className="container mx-auto px-4 sm:px-6 py-24 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ export default function LandingPage() {
               <span className="text-sm font-medium">AI-Powered E-Commerce</span>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6">
               <span className="gradient-text">Your Store,</span>
               <br />
               <span className="text-gray-900 dark:text-white">Our AI Does Marketing</span>
@@ -34,7 +34,7 @@ export default function LandingPage() {
               Just upload products and set your budget.
             </p>
             
-            <div className="flex gap-4 justify-center">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link href="/register">
                 <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
                   Start Free Trial
@@ -52,7 +52,7 @@ export default function LandingPage() {
       </div>
 
       {/* Features */}
-      <div className="container mx-auto px-6 py-24">
+      <div className="container mx-auto px-4 sm:px-6 py-24">
         <div className="grid md:grid-cols-3 gap-8">
           <FeatureCard 
             icon={<ShoppingCart className="w-8 h-8" />}

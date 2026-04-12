@@ -2,11 +2,17 @@
 
 import { useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
-import { Bell, Search, User, Moon, Sun, LogOut } from 'lucide-react'
+import { Bell, Search, User, Moon, Sun, LogOut, Menu } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Input } from '@/components/ui/Input'
 
-export function Header() {
+export function Header({
+  sidebarOpen,
+  onToggleSidebar,
+}: {
+  sidebarOpen: boolean
+  onToggleSidebar: () => void
+}) {
   const { data: session } = useSession()
   const { theme, resolvedTheme, setTheme } = useTheme()
   const [showUserMenu, setShowUserMenu] = useState(false)
@@ -53,8 +59,16 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 glass-morphism border-b border-white/20">
-      <div className="flex items-center justify-between px-8 py-4">
-        {/* Search */}
+      <div className="flex items-center justify-between px-4 py-4 gap-4 md:px-8">
+        <button
+          type="button"
+          className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition md:hidden"
+          onClick={onToggleSidebar}
+          aria-label={sidebarOpen ? 'Close navigation' : 'Open navigation'}
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
         <div className="flex-1 max-w-md">
           <Input
             placeholder="Search products, orders..."

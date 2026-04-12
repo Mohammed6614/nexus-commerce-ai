@@ -26,11 +26,22 @@ const menuItems = [
   { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
 ]
 
-export function Sidebar() {
+export function Sidebar({
+  open,
+  onClose,
+}: {
+  open: boolean
+  onClose: () => void
+}) {
   const pathname = usePathname()
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 glass-morphism z-50">
+    <aside
+      className={cn(
+        'fixed left-0 top-0 h-full w-64 glass-morphism z-50 transform transition-transform duration-300 ease-in-out md:translate-x-0',
+        open ? 'translate-x-0' : '-translate-x-full'
+      )}
+    >
       <div className="flex flex-col h-full">
         {/* Logo */}
         <div className="p-6 border-b border-white/20">
@@ -43,7 +54,7 @@ export function Sidebar() {
           {menuItems.map((item) => {
             const isActive = pathname === item.href
             return (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href} onClick={onClose}>
                 <motion.div
                   whileHover={{ x: 5 }}
                   className={cn(
