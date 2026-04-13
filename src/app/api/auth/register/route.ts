@@ -66,22 +66,36 @@ export async function POST(req: Request) {
       }
     })
 
-    await sendVerificationEmail({
-      to: tenant.email,
-      token: verificationToken,
-      name: tenant.name,
-    })
-
-    return NextResponse.json({
-      success: true,
-      message: 'تم إنشاء المتجر بنجاح. يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.',
-      tenant: {
-        id: tenant.id,
+    try {
+      await sendVerificationEmail({
+        to: tenant.email,
+        token: verificationToken,
         name: tenant.name,
-        subdomain: tenant.subdomain,
-        email: tenant.email
-      }
-    })
+      })
+
+      return NextResponse.json({
+        success: true,
+        message: 'تم إنشاء المتجر بنجاح. يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.',
+        tenant: {
+          id: tenant.id,
+          name: tenant.name,
+          subdomain: tenant.subdomain,
+          email: tenant.email
+        }
+      })
+    } catch (emailError) {
+      console.error('Verification email send failed:', emailError)
+      return NextResponse.json({
+        success: true,
+        message: 'تم إنشاء المتجر بنجاح، ولكن لم نتمكن من إرسال رسالة التحقق. يرجى إعادة إرسال التحقق من بريدك الإلكتروني.',
+        tenant: {
+          id: tenant.id,
+          name: tenant.name,
+          subdomain: tenant.subdomain,
+          email: tenant.email
+        }
+      })
+    }
   } catch (error) {
     console.error('Registration error:', error)
     return NextResponse.json(

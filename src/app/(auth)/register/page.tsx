@@ -75,7 +75,7 @@ export default function RegisterPage() {
       const data = await response.json()
 
       if (response.ok && data.success) {
-        toast.success('تم إنشاء المتجر بنجاح! الرجاء التحقق من بريدك الإلكتروني لتأكيد الحساب.')
+        toast.success(data.message || 'تم إنشاء المتجر بنجاح! الرجاء التحقق من بريدك الإلكتروني لتأكيد الحساب.')
         router.push('/login')
       } else {
         const errorMessage = data.message || 'فشل إنشاء المتجر'
