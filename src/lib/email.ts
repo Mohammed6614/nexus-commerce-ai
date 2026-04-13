@@ -69,7 +69,15 @@ export async function sendVerificationEmail({
   `
 
   if (process.env.SENDGRID_API_KEY) {
-    return sendWithSendGrid({ to, subject, html })
+    try {
+      return await sendWithSendGrid({ to, subject, html })
+    } catch (error) {
+      console.error('SendGrid email send failed, falling back to SMTP:', error)
+      if (process.env.EMAIL_SERVER) {
+        return await sendWithNodemailer({ to, subject, html })
+      }
+      throw error
+    }
   }
 
   return sendWithNodemailer({ to, subject, html })

@@ -48,16 +48,30 @@ export async function POST(req: Request) {
       }
     })
 
-    await sendVerificationEmail({
-      to: tenant.email,
-      token: verificationToken,
-      name: tenant.name,
-    })
+    try {
+      await sendVerificationEmail({
+        to: tenant.email,
+        token: verificationToken,
+        name: tenant.name,
+      })
 
-    return NextResponse.json({
-      success: true,
-      message: 'Verification email resent. Please check your inbox.'
-    })
+      return NextResponse.json({
+        success: true,
+        message: 'Verification email resent. Please check your inbox.'
+      })
+    } catch (error) {
+      console.error('Resend verification email error:', error)
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : 'Unable to resend verification email'
+        },
+        { status: 500 }
+      )
+    }
   } catch (error) {
     console.error('Resend verification email error:', error)
     return NextResponse.json(
