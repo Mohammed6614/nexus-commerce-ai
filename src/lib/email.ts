@@ -4,10 +4,10 @@ import nodemailer from 'nodemailer'
 import sgMail from '@sendgrid/mail'
 
 const emailFrom = process.env.EMAIL_FROM || 'no-reply@nexus-commerce-ai.com'
-const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
+const baseUrl = process.env.NEXTAUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
 function getVerificationUrl(token: string) {
-  return `${baseUrl}/verify-email?token=${encodeURIComponent(token)}`
+  return `${baseUrl.replace(/\/$/, '')}/verify-email?token=${encodeURIComponent(token)}`
 }
 
 async function sendWithSendGrid({ to, subject, html }: { to: string; subject: string; html: string }) {

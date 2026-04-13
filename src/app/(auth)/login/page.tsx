@@ -57,7 +57,7 @@ export default function LoginPage() {
 
       if (!result || result.error) {
         const message = result?.error ? result.error : 'Unable to sign in. Please try again.'
-        setFormError('Invalid email or password')
+        setFormError(message)
         toast.error(message)
       } else {
         toast.success('Login successful!')
