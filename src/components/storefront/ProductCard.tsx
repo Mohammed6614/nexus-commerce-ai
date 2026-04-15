@@ -14,9 +14,10 @@ interface ProductCardProps {
     description?: string
   }
   onAddToCart: (product: any) => void
+  accentColor?: string
 }
 
-export function ProductCard({ product, onAddToCart }: ProductCardProps) {
+export function ProductCard({ product, onAddToCart, accentColor }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   
   return (
@@ -41,7 +42,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       {/* Content */}
       <div className="p-4">
         <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
-        <p className="text-2xl font-bold" style={{ color: 'var(--primary-color)' }}>
+        <p className="text-2xl font-bold" style={{ color: accentColor || 'var(--primary-color)' }}>
           {formatCurrency(product.price)}
         </p>
         {product.description && (
@@ -55,7 +56,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           onClick={() => onAddToCart(product)}
           className="mt-4 w-full py-2 rounded-xl font-semibold transition-all flex items-center justify-center gap-2"
           style={{
-            backgroundColor: 'var(--primary-color)',
+            backgroundColor: accentColor || 'var(--primary-color)',
             color: 'white'
           }}
         >

@@ -41,9 +41,9 @@ export default function LandingPage() {
                   <Zap className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
-              <Link href="/login">
+              <Link href="/preview-store">
                 <Button size="lg" variant="outline">
-                  Sign In
+                  Preview Store
                 </Button>
               </Link>
             </div>
