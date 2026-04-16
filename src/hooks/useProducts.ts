@@ -39,19 +39,19 @@ export function useProducts() {
   }
 
   const generateAI = async (productId: string) => {
+    const toastId = toast.loading('AI is generating content...')
     try {
-      toast.loading('AI is generating content...')
       const response = await fetch('/api/ai/generate-content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId }),
       })
       const data = await response.json()
-      toast.success('AI content generated!')
+      toast.success('AI content generated!', { id: toastId })
       await fetchProducts() // Refresh
       return data
     } catch (error) {
-      toast.error('AI generation failed')
+      toast.error('AI generation failed', { id: toastId })
       throw error
     }
   }

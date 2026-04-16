@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Plus, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -10,6 +11,7 @@ import { useProducts } from '@/hooks/useProducts'
 import { motion } from 'framer-motion'
 
 export default function ProductsPage() {
+  const router = useRouter()
   const { products, loading, addProduct, generateAI } = useProducts()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [newProduct, setNewProduct] = useState({
@@ -97,7 +99,11 @@ export default function ProductsPage() {
                   <Sparkles className="w-4 h-4 mr-2" />
                   AI Description
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => router.push(`/dashboard/products/${product.id}`)}
+                >
                   View Details
                 </Button>
               </div>
