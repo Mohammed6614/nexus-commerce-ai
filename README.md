@@ -58,3 +58,25 @@ Nexus Commerce AI includes a full authentication system using:
 - Email delivery with SendGrid or SMTP via `nodemailer`
 
 Visit `/register` to create a new store account, `/login` to sign in, `/verify-email` to confirm email, `/resend-verification` to resend a verification email, and `/reset-password` to recover a lost password.
+
+## Local dev demo (seeded account & dev login)
+
+For quick local testing I added a SQLite dev datasource and a seed script that creates a demo tenant and product.
+
+- Seed data: run:
+
+```bash
+DATABASE_URL="file:./dev.db" npx prisma generate
+DATABASE_URL="file:./dev.db" npx prisma db push
+DATABASE_URL="file:./dev.db" npm run seed
+```
+
+- Demo credentials:
+	- Email: `demo@local.test`
+	- Password: `Password123!`
+
+- Dev-only login route (enabled when `DEV_LOGIN=true` or when `NODE_ENV` is not `production`):
+	- POST `/api/auth/dev-login` with JSON `{ "email": "demo@local.test", "password": "Password123!" }`
+	- Returns basic tenant info for local testing.
+
+Note: The dev-login route is intentionally disabled in production. To deploy to Vercel or restore production DB, set `DATABASE_URL` to your Postgres/Supabase URL and ensure the host is reachable from Vercel. If you want, I can help prepare Vercel environment variables and a production-ready deployment config.
